@@ -24,15 +24,15 @@ public class WorldMapTest {
 	
     @Test
 	public void testDimensions() {
-		WorldMap wm = new WorldMap.Builder(10, 20, 30).build();
+		WorldMap wm = new WorldMapBuilder(10, 20, 30).build();
 		assertEquals(wm.getRows(), 10);
 		assertEquals(wm.getColumns(), 20);
-		assertEquals(wm.getDepth(), 30);
+		assertEquals(wm.getLayers(), 30);
     }
 
 	@Test
 	public void testPlaceEntity() {
-		WorldMap wm = new WorldMap.Builder(1, 1, 1)
+		WorldMap wm = new WorldMapBuilder(1, 1, 1)
 			.placeEntity(0, 0, 0, 0, new TestEntity("hej"))
 			.build();
 
@@ -41,21 +41,21 @@ public class WorldMapTest {
 
 	@Test
 	public void testClone() {
-		WorldMap wm1 = new WorldMap.Builder(1, 1, 1)
+		WorldMap wm1 = new WorldMapBuilder(1, 1, 1)
 			.placeEntity(0, 0, 0, 0, new TestEntity("hej"))
 			.build();
 
-		WorldMap wm2 = new WorldMap.Builder(wm1).build();
+		WorldMap wm2 = new WorldMapBuilder(wm1).build();
 		assertEquals(wm2.getEntities(0, 0, 0).get(0).toString(), "hej");
 	}
 
 	@Test
 	public void testMoveEntity() {
-		WorldMap wm = new WorldMap.Builder(2, 1, 1)
+		WorldMap wm = new WorldMapBuilder(2, 1, 1)
 			.placeEntity(0, 0, 0, 0, new TestEntity("hej"))
 			.build();
 
-		wm = new WorldMap.Builder(wm)
+		wm = new WorldMapBuilder(wm)
 			.moveEntity(0, 0, 0, 0,
 						1, 0, 0, 0)
 			.build();
@@ -66,11 +66,11 @@ public class WorldMapTest {
 	
 	@Test
 	public void testRemoveEntity() {
-		WorldMap wm = new WorldMap.Builder(2, 1, 1)
+		WorldMap wm = new WorldMapBuilder(2, 1, 1)
 			.placeEntity(0, 0, 0, 0, new TestEntity("hej"))
 			.build();
 
-		wm = new WorldMap.Builder(wm)
+		wm = new WorldMapBuilder(wm)
 			.removeEntity(0, 0, 0, 0)
 			.build();
 		
@@ -80,21 +80,21 @@ public class WorldMapTest {
 	@Test
 	public void testGetSubmapBottomRow() {
 
-		WorldMap wm1 = new WorldMap.Builder(2, 2, 1)
+		WorldMap wm1 = new WorldMapBuilder(2, 2, 1)
 			.placeEntity(1, 1, 0, 0, new TestEntity("hej"))
 			.build();
 
 		WorldMap wm2 = wm1.getSubmap(1, 0, 0, 1, 2, 1);		
 		assertEquals(wm2.getRows(), 1);
 		assertEquals(wm2.getColumns(), 2);
-		assertEquals(wm2.getDepth(), 1);
+		assertEquals(wm2.getLayers(), 1);
 		assertEquals(wm2.getEntities(0, 1, 0).get(0).toString(), "hej");
 	}
 	
 	@Test
 	public void testGetSubmapEntityOrder() {
 
-		WorldMap wm1 = new WorldMap.Builder(2, 2, 1)
+		WorldMap wm1 = new WorldMapBuilder(2, 2, 1)
 			.placeEntity(1, 1, 0, 0, new TestEntity("0"))
 			.placeEntity(1, 1, 0, 1, new TestEntity("1"))
 			.build();
@@ -107,11 +107,14 @@ public class WorldMapTest {
 	@Test
 	public void testShiftLeft() {
 
-		WorldMap wm1 = new WorldMap.Builder(2, 2, 1)
+		WorldMap wm1 = new WorldMapBuilder(2, 2, 1)
 			.placeEntity(0, 1, 0, 0, new TestEntity("hej"))
 			.build();
 
-		WorldMap wm2 = wm1.shift(0, -1, 0);
+		WorldMap wm2 = new WorldMapBuilder(wm1)
+			.shift(0, -1, 0)
+			.build();
+		
 		assertEquals(wm2.getEntities(0, 0, 0).get(0).toString(), "hej");
 		assertEquals(wm2.getEntities(0, 1, 0).size(), 0);
 		assertEquals(wm2.getEntities(1, 0, 0).size(), 0);		
@@ -121,15 +124,95 @@ public class WorldMapTest {
 	@Test
 	public void testShiftLeftUp() {
 
-		WorldMap wm1 = new WorldMap.Builder(2, 2, 1)
+		WorldMap wm1 = new WorldMapBuilder(2, 2, 1)
 			.placeEntity(1, 1, 0, 0, new TestEntity("hej"))
 			.build();
 
-		WorldMap wm2 = wm1.shift(-1, -1, 0);
+		WorldMap wm2 = new WorldMapBuilder(wm1)
+			.shift(-1, -1, 0)
+			.build();
+
 		assertEquals(wm2.getEntities(0, 0, 0).get(0).toString(), "hej");
 		assertEquals(wm2.getEntities(1, 1, 0).size(), 0);
 		assertEquals(wm2.getEntities(0, 1, 0).size(), 0);
 		assertEquals(wm2.getEntities(1, 0, 0).size(), 0);						
+	}
+
+	@Test
+	public void testAppendRow() {
+		WorldMap wm1 = new WorldMapBuilder(2, 2, 1)
+			.placeEntity(1, 1, 0, 0, new TestEntity("hej"))
+			.build();
+		
+		WorldMap wm2 = new WorldMapBuilder(1, 2, 1)
+			.placeEntity(0, 1, 0, 0, new TestEntity("hejdå"))
+			.build();
+
+		try {
+			WorldMap wm3 = new WorldMapBuilder(wm1)
+				.append(wm2, 0)
+				.build();
+
+			assertEquals(wm3.getRows(), 3);
+			assertEquals(wm3.getColumns(), 2);
+			assertEquals(wm3.getLayers(), 1);
+		
+			assertEquals(wm3.getEntities(1, 1, 0).size(), 1);
+			assertEquals(wm3.getEntities(2, 0, 0).size(), 0);								
+			assertEquals(wm3.getEntities(2, 1, 0).size(), 1);
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testAppendColumn() {
+		WorldMap wm1 = new WorldMapBuilder(1, 1, 1)
+			.build();
+		
+		WorldMap wm2 = new WorldMapBuilder(1, 1, 1)
+			.placeEntity(0, 0, 0, 0, new TestEntity("hejdå"))
+			.build();
+
+		try {
+			WorldMap wm3 = new WorldMapBuilder(wm1)
+				.append(wm2, 1)
+				.build();
+
+			assertEquals(wm3.getRows(), 1);
+			assertEquals(wm3.getColumns(), 2);
+			assertEquals(wm3.getLayers(), 1);
+		
+			assertEquals(wm3.getEntities(0, 0, 0).size(), 0);
+			assertEquals(wm3.getEntities(0, 1, 0).size(), 1);
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testAppendLayer() {
+		WorldMap wm1 = new WorldMapBuilder(1, 1, 1)
+			.placeEntity(0, 0, 0, 0, new TestEntity("hejdå"))
+			.build();
+		
+		WorldMap wm2 = new WorldMapBuilder(1, 1, 1)
+			.build();
+
+		try {
+			WorldMap wm3 = new WorldMapBuilder(wm1)
+				.append(wm2, 2)
+				.build();
+
+			assertEquals(wm3.getRows(), 1);
+			assertEquals(wm3.getColumns(), 1);
+			assertEquals(wm3.getLayers(), 2);
+		
+			assertEquals(wm3.getEntities(0, 0, 0).size(), 1);
+			assertEquals(wm3.getEntities(0, 0, 1).size(), 0);
+		} catch (Exception e) {
+			fail();
+		}
 	}
 
 	@Test
@@ -163,7 +246,7 @@ public class WorldMapTest {
 	@Test
 	public void testSerializeWorldMap() {
 		try {
-			WorldMap wm = new WorldMap.Builder(10, 20, 30).build();
+			WorldMap wm = new WorldMapBuilder(10, 20, 30).build();
 			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ObjectOutputStream out = new ObjectOutputStream(baos);
@@ -177,7 +260,7 @@ public class WorldMapTest {
 	@Test
 	public void testDeserializeWorldMap() {
 		try {
-			WorldMap wm1 = new WorldMap.Builder(10, 20, 30).build();
+			WorldMap wm1 = new WorldMapBuilder(10, 20, 30).build();
 			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ObjectOutputStream out = new ObjectOutputStream(baos);
@@ -190,7 +273,7 @@ public class WorldMapTest {
 			
 			assertEquals(wm1.getRows(), wm2.getRows());
 			assertEquals(wm1.getColumns(), wm2.getColumns());
-			assertEquals(wm1.getDepth(), wm2.getDepth());			
+			assertEquals(wm1.getLayers(), wm2.getLayers());			
 		} catch (Exception e) {
 			fail();
 		}		

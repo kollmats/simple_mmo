@@ -8,7 +8,7 @@
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
-apply plugin: 'application'
+//apply plugin: 'application'
 
 task execute(type:JavaExec) {
      main = "simple_mmo.View"
