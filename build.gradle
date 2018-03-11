@@ -10,12 +10,28 @@
 apply plugin: 'java'
 //apply plugin: 'application'
 
-task execute(type:JavaExec) {
-     main = "simple_mmo.View"
+compileJava {
+    options.compilerArgs << '-g' // For debugging info
+}
+
+task run_client(type:JavaExec) {
+     main = "org.smmo.client.Main"
      //args '-XstartOnFirstThread' // This arg goes to main method
      jvmArgs '-XstartOnFirstThread' // This arg goes to jvm
      classpath = sourceSets.main.runtimeClasspath
 }
+
+task run_server(type:JavaExec) {
+     main = "org.smmo.server.Main"
+     //args '-XstartOnFirstThread' // This arg goes to main method
+     //jvmArgs '-XstartOnFirstThread' // This arg goes to jvm
+    classpath = sourceSets.main.runtimeClasspath
+    //if (getDebug()) {
+	// toggle flag with --debug-jvm
+        //jvmArgs '-Xdebug','-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005'	
+    //}
+}
+
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -56,6 +72,9 @@ dependencies {
     compile "org.lwjgl:lwjgl-openal:$lwjglVersion:$lwjglNatives"
     compile "org.lwjgl:lwjgl-opengl:$lwjglVersion:$lwjglNatives"
     compile "org.lwjgl:lwjgl-stb:$lwjglVersion:$lwjglNatives"
+
+
+    compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
     
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
