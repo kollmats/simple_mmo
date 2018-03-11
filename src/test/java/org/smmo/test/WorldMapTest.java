@@ -1,4 +1,4 @@
-package simple_mmo;
+package org.smmo.test;
 
 import org.smmo.common.*;
 
@@ -12,7 +12,7 @@ import java.io.ObjectInputStream;
 
 public class WorldMapTest {
 	
-	private static class TestEntity extends Entity implements Serializable {
+	public static class TestEntity extends Entity implements Serializable {
 		private final String text;
 
 		public TestEntity(String text) {

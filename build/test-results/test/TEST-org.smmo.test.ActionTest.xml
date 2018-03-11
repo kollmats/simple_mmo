@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.smmo.test.ActionTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-03-11T21:59:47" hostname="Detox.local" time="0.073">
+  <properties/>
+  <testcase name="testMoveEntityReturnsValidContext" classname="org.smmo.test.ActionTest" time="0.065"/>
+  <testcase name="testMoveEntityPositionChanged" classname="org.smmo.test.ActionTest" time="0.008"/>
+  <system-out><![CDATA[success
+success
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

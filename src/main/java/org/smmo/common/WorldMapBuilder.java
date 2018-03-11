@@ -52,10 +52,6 @@ public class WorldMapBuilder {
 	}		
 
 	public WorldMapBuilder moveEntity(int iSrc, int jSrc, int kSrc, int idxSrc, int iDst, int jDst, int kDst, int idxDst) {
-
-		System.out.println(idxSrc);
-		System.out.println(entities[iSrc][jSrc][kSrc].size());
-		
 		Entity entity = entities[iSrc][jSrc][kSrc].remove(idxSrc);
 		System.out.println("success");
 		entities[iDst][jDst][kDst].add(idxDst, entity);
