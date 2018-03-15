@@ -42,9 +42,20 @@ public class WorldMap implements Serializable {
 		WorldMapBuilder builder = new WorldMapBuilder(rows, columns, layers);
 		
 		for (int i = 0; i < rows; i++) {
+
+			if (iStart + i >= getRows())
+				continue;
+			
 			for (int j = 0; j < columns; j++) {
+				if (jStart + j >= getColumns())
+					continue;
+				
 				for (int k = 0; k < layers; k++) {
+					if (kStart + k >= getLayers())
+						continue;
+					
 					ImmutableList<Entity> entities;
+					
 					entities = this.entities[iStart + i][jStart + j][kStart + k];
 
 					for (int idx = 0; idx < entities.size(); idx++) {

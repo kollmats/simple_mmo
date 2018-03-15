@@ -21,7 +21,7 @@ public class Context {
 		this.positionCache = ImmutableBiMap.copyOf(positionCache);
 	}
 	
-	public Context(WorldMap worldMap, BiMap<UniqueEntity, Vec4i> positionCache, Vec3i origin, Context parent) {
+	private Context(WorldMap worldMap, BiMap<UniqueEntity, Vec4i> positionCache, Vec3i origin, Context parent) {
 		this(worldMap, positionCache);
 		this.origin = origin;
 		this.parent = parent;
@@ -43,16 +43,32 @@ public class Context {
 		return HashBiMap.create(positionCache);
 	}
 
+	public Entity getEntityFromPosition(Vec4i vec) {
+		return worldMap.getEntity(vec.getX(), vec.getY(), vec.getZ(), vec.getW()).get();
+	}
 
-	public Vec4i getEntityPosition(UniqueEntity entity) {
-		Vec4i pos = positionCache.get(entity);
 
-		if (pos != null)
+	public Vec4i getEntityPosition(Entity entity) {
+		Vec4i pos = null;
+		if (entity instanceof UniqueEntity) {
+			pos = positionCache.get(entity);
 			return pos;
-		else {
+		} else {
 			// Search for it in the map (and add to cache??)			
 			throw new NotImplementedException();
 		}		
+	}
+	
+	public Vec4i getEntityPosition(long entityId) {
+		for (Map.Entry<UniqueEntity, Vec4i> entry : positionCache.entrySet()) {
+			UniqueEntity e = entry.getKey();
+
+			if (e.getId() == entityId) {
+				Vec4i v = entry.getValue();
+				return v;
+			}
+		}
+		return null;
 	}
 	
 	public boolean isValid() {
@@ -97,18 +113,21 @@ public class Context {
 									   jStart, jStart + nCols,
 									   kStart, kStart + nLays);
 
-		BiMap<UniqueEntity, Vec4i> newCache = HashBiMap.create(positionCache);
+		final Vec3i newOrigin = new Vec3i(iStart, jStart, kStart);
+		final BiMap<UniqueEntity, Vec4i> newCache = HashBiMap.create(positionCache);
 		for (Map.Entry<UniqueEntity, Vec4i> entry : positionCache.entrySet()) {		
 			v = entry.getValue();
 
 			if (i3.contains(v.getX(), v.getY(), v.getZ())) {
 				UniqueEntity e = entry.getKey();
+				v = Vec.subtract(v, new Vec4i(newOrigin, 0));
 				newCache.put(e, v);
 			}				
 		}
 
+		
 		final WorldMap newMap = worldMap.getSubmap(iStart, jStart, kStart, nRows, nCols, nLays);
-		final Vec3i newOrigin = new Vec3i(iStart, jStart, kStart);
+
 		return new Context(newMap, newCache, newOrigin, this);			
 	}	
 }

@@ -3,28 +3,41 @@ package org.smmo.common.writers;
 import org.smmo.common.actions.MoveEntityAction;
 import org.smmo.common.*;
 import org.smmo.common.util.*;
+import org.smmo.common.actions.*;
 import java.io.IOException;
+import java.io.OutputStream;
 
-public class MoveEntityWriter extends PacketWriter {
-
+public class MoveEntityWriter implements PacketWriter {
+	private final MoveEntityAction action;
+	private final Context sourceContext;
+	private final Context targetContext;	
+	
 	@Override
-	public void writeTo(PacketOutputStream stream) throws IOException {
-		MoveEntityAction moa = (MoveEntityAction) getAction();
-		Context srcContext = getSourceContext();
-		Context dstContext = getTargetContext();
-
-		UniqueEntity object = moa.object;
-		Vec4i objPos = srcContext.getEntityPosition(object);
-		Vec4i dstPos = moa.dst;
+	public void writeTo(OutputStream outputStream) throws IOException {
+		PacketOutputStream stream = new PacketOutputStream(outputStream);
 		
-		if ((srcContext != null) && (srcContext != dstContext)) {
-			Vec3i offset = Vec.subtract(srcContext.getOrigin(), dstContext.getOrigin());
+		Vec4i objPos = action.objectPos;
+		Vec4i dstPos = action.targetPos;
+		
+		if (sourceContext != targetContext) {
+			Vec3i offset = Vec.subtract(sourceContext.getOrigin(), targetContext.getOrigin());
 			objPos = Vec.add(objPos, new Vec4i(offset, 0));
 			dstPos = Vec.add(dstPos, new Vec4i(offset, 0));			
 		}
-
+		
 		stream.writeVec4i(objPos);
 		stream.writeVec4i(dstPos);		
 	}
+
+	public MoveEntityWriter(MoveEntityAction action, Context sourceContext) {
+		this(action, sourceContext, sourceContext);
+	}
+	
+	public MoveEntityWriter(MoveEntityAction action, Context sourceContext, Context targetContext) {
+		this.action = action;
+		this.sourceContext = sourceContext;
+		this.targetContext = targetContext;
+	}
+	
 }
 

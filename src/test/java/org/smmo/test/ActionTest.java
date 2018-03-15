@@ -1,4 +1,4 @@
-
+package org.smmo.test;
 
 import org.smmo.server.*;
 import org.smmo.common.*;
@@ -12,26 +12,6 @@ import org.junit.Before;
 import static org.junit.Assert.*;
 
 public class ActionTest {
-	public class IdEntity implements UniqueEntity {
-		private long id;
-		public IdEntity(long id) {
-			this.id = id;
-		}
-		
-		public long getId() {
-			return id;
-		}
-
-		@Override
-		public boolean equals(Object other) {
-			return ((IdEntity) other).getId() == getId();
-		}
-
-		@Override
-		public int hashCode() {
-			return (int) getId();
-		}
-	}
 
 	private WorldMap worldMap;
 	private Context context;
@@ -51,7 +31,7 @@ public class ActionTest {
 
 	@Test
 	public void testMoveEntityReturnsValidContext() {
-		Action a = new MoveEntityAction(entity, entity, new Vec4i(1, 0, 0, 0));
+		Action a = new MoveEntityAction(1, new Vec4i(0, 0, 0, 0), new Vec4i(1, 0, 0, 0));
 
 		if (a.isValid(context)) {
 			Context newContext = a.execute(context);
@@ -64,7 +44,7 @@ public class ActionTest {
 	@Test
 	public void testMoveEntityPositionChanged() {
 		Vec4i dst = new Vec4i(1, 0, 0, 0);
-		Action a = new MoveEntityAction(entity, entity, dst);
+		Action a = new MoveEntityAction(1, new Vec4i(0, 0, 0, 0), dst);		
 
 		if (a.isValid(context)) {
 			Context newContext = a.execute(context);

@@ -1,9 +1,10 @@
 package org.smmo.common.readers;
 
-import org.smmo.common.PacketInputStream;
-import java.io.IOException;
+
+import java.io.InputStream;
 import java.lang.ClassNotFoundException;
+import java.io.IOException;
 
 public interface PacketReader {
-	public Object readFrom(PacketInputStream inputStream) throws IOException, ClassNotFoundException;
+	public Object readFrom(InputStream inputStream) throws IOException, ClassNotFoundException;
 }

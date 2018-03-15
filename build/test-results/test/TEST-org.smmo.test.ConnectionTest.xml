@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.smmo.test.ConnectionTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-03-15T18:45:19" hostname="Detox.local" time="0.0">
+<testsuite name="org.smmo.test.ConnectionTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-03-15T22:29:32" hostname="Detox.local" time="0.0">
   <properties/>
   <testcase name="testHashCode" classname="org.smmo.test.ConnectionTest" time="0.0"/>
   <testcase name="testEquals" classname="org.smmo.test.ConnectionTest" time="0.0"/>

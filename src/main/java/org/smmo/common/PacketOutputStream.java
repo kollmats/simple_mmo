@@ -18,6 +18,10 @@ public class PacketOutputStream extends OutputStream {
         stream.write(value);		
     }
 
+    public void writeByte(int value) throws IOException {
+        stream.write(value & 0xFF);
+    }
+
     public void writeU16(int value) throws IOException {
         stream.write((int)  (value & 0x00FF));
         stream.write((int) ((value & 0xFF00) >> 8));
@@ -31,9 +35,9 @@ public class PacketOutputStream extends OutputStream {
 	}
 
 	public void writeVec4i(Vec4i vec) throws IOException {
-		writeU32(vec.getX());
-		writeU32(vec.getY());
-		writeU32(vec.getZ());
-		writeU32(vec.getW());		
+		writeU16(vec.getX());
+		writeU16(vec.getY());
+		writeU16(vec.getZ());
+		writeU16(vec.getW());		
 	}
 }

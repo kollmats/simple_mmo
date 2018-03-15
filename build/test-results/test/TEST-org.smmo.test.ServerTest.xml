@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.smmo.test.ServerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-03-15T18:45:19" hostname="Detox.local" time="0.21">
+<testsuite name="org.smmo.test.ServerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-03-15T22:29:32" hostname="Detox.local" time="0.209">
   <properties/>
-  <testcase name="testListen" classname="org.smmo.test.ServerTest" time="0.21"/>
+  <testcase name="testListen" classname="org.smmo.test.ServerTest" time="0.209"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

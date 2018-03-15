@@ -27,4 +27,22 @@ public class Vec4i {
 	public int getW() {
 		return (int) vec4d.getW();
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null)
+			return false;
+
+		if (!(o instanceof Vec4i))
+			return false;
+			
+		Vec4i other = (Vec4i) o;
+		return ((getX() == other.getX()) && (getY() == other.getY()) && (getZ() == other.getZ()) && (getW() == other.getW()));
+	}
+
+	@Override
+	public int hashCode() {
+		return vec4d.hashCode();
+	}
+	
 }
