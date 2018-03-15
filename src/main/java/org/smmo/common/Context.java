@@ -5,36 +5,67 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.HashBiMap;
 import java.util.Optional;
+import java.lang.Math;
+
+import org.smmo.common.util.*;
 
 public class Context {
-
-	private final WorldMap worldMap;
-	private final BiMap<Entity, Vec4> entityPositionCache;
 	
-	public Context(WorldMap worldMap, BiMap<Entity, Vec4> entityPositionCache) {
+	private Vec3i origin = null;
+	private Context parent = null;
+	private final WorldMap worldMap;
+	private final BiMap<UniqueEntity, Vec4i> positionCache;
+	
+	public Context(WorldMap worldMap, BiMap<UniqueEntity, Vec4i> positionCache) {
 		this.worldMap = worldMap;
-		this.entityPositionCache = ImmutableBiMap.copyOf(entityPositionCache);
+		this.positionCache = ImmutableBiMap.copyOf(positionCache);
+	}
+	
+	public Context(WorldMap worldMap, BiMap<UniqueEntity, Vec4i> positionCache, Vec3i origin, Context parent) {
+		this(worldMap, positionCache);
+		this.origin = origin;
+		this.parent = parent;
+	}
+
+	public Vec3i getOrigin() {
+		return origin;
+	}
+
+	public Context getParentContext() {
+		return parent;
 	}
 
 	public WorldMap getWorldMap() {
 		return worldMap;
 	}
 
-	public BiMap<Entity, Vec4> getEntityPositionCache() {
-		return HashBiMap.create(entityPositionCache);
+	public BiMap<UniqueEntity, Vec4i> getPositionCache() {
+		return HashBiMap.create(positionCache);
 	}
 
+
+	public Vec4i getEntityPosition(UniqueEntity entity) {
+		Vec4i pos = positionCache.get(entity);
+
+		if (pos != null)
+			return pos;
+		else {
+			// Search for it in the map (and add to cache??)			
+			throw new NotImplementedException();
+		}		
+	}
+	
 	public boolean isValid() {
 
 		// Check that all positions in the cache exist in the 
-		for (Map.Entry<Entity, Vec4> entry : entityPositionCache.entrySet()) {
-			Entity e = entry.getKey();
-			Vec4 v = entry.getValue();
+		for (Map.Entry<UniqueEntity, Vec4i> entry : positionCache.entrySet()) {
+			UniqueEntity e = entry.getKey();
+			Vec4i v = entry.getValue();
 
-			int i   = (int) v.x;
-			int j   = (int) v.y;
-			int k   = (int) v.z;
-			int idx = (int) v.w;
+			int i   = v.getX();
+			int j   = v.getY();
+			int k   = v.getZ();
+			int idx = v.getW();
 			Optional<Entity> opt = worldMap.getEntity(i, j, k, idx);
 
 			if (!opt.isPresent())
@@ -43,7 +74,41 @@ public class Context {
 			if (!opt.get().equals(e))
 				return false;			
 		}
-
+		
 		return true;
 	}
+
+	public Context getPerspective(UniqueEntity observer) {
+
+		Vec4i v = positionCache.get(observer);
+		final int di = (int)((Camera.HEIGHT - 1) / 2.0);
+		final int dj = (int)((Camera.WIDTH  - 1) / 2.0);
+		final int dk = (int)((Camera.DEPTH  - 1) / 2.0);
+
+		final int iStart = (int) Math.max(v.getX() - di, 0);
+		final int jStart = (int) Math.max(v.getY() - dj, 0);
+		final int kStart = (int) Math.max(v.getZ() - dk, 0);
+		
+		final int nRows  = Math.min(Camera.HEIGHT, worldMap.getRows());
+		final int nCols  = Math.min(Camera.WIDTH, worldMap.getColumns());
+		final int nLays  = Math.min(Camera.DEPTH, worldMap.getLayers());
+
+		Interval3i i3 = new Interval3i(iStart, iStart + nRows,
+									   jStart, jStart + nCols,
+									   kStart, kStart + nLays);
+
+		BiMap<UniqueEntity, Vec4i> newCache = HashBiMap.create(positionCache);
+		for (Map.Entry<UniqueEntity, Vec4i> entry : positionCache.entrySet()) {		
+			v = entry.getValue();
+
+			if (i3.contains(v.getX(), v.getY(), v.getZ())) {
+				UniqueEntity e = entry.getKey();
+				newCache.put(e, v);
+			}				
+		}
+
+		final WorldMap newMap = worldMap.getSubmap(iStart, jStart, kStart, nRows, nCols, nLays);
+		final Vec3i newOrigin = new Vec3i(iStart, jStart, kStart);
+		return new Context(newMap, newCache, newOrigin, this);			
+	}	
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.smmo.test.Vec4Test" tests="3" skipped="0" failures="0" errors="0" timestamp="2018-03-11T21:59:47" hostname="Detox.local" time="0.002">
+<testsuite name="org.smmo.test.Vec4Test" tests="3" skipped="0" failures="0" errors="0" timestamp="2018-03-13T23:27:55" hostname="Detox.local" time="0.001">
   <properties/>
   <testcase name="subtract" classname="org.smmo.test.Vec4Test" time="0.0"/>
   <testcase name="dot" classname="org.smmo.test.Vec4Test" time="0.0"/>

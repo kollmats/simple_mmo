@@ -1,8 +1,9 @@
-package org.smmo.test;
+
 
 import org.smmo.server.*;
 import org.smmo.common.*;
 import org.smmo.common.actions.*;
+import org.smmo.common.util.*;
 
 import com.google.common.collect.HashBiMap;
 
@@ -11,26 +12,46 @@ import org.junit.Before;
 import static org.junit.Assert.*;
 
 public class ActionTest {
+	public class IdEntity implements UniqueEntity {
+		private long id;
+		public IdEntity(long id) {
+			this.id = id;
+		}
+		
+		public long getId() {
+			return id;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			return ((IdEntity) other).getId() == getId();
+		}
+
+		@Override
+		public int hashCode() {
+			return (int) getId();
+		}
+	}
 
 	private WorldMap worldMap;
 	private Context context;
-	private HashBiMap<Entity, Vec4> cache;
-	private Entity entity;
+	private HashBiMap<UniqueEntity, Vec4i> cache;
+	private UniqueEntity entity;
 	@Before
 	public void setUp() {
-		entity = new Entity();	
+		entity = new IdEntity(1);	
 		worldMap = new WorldMapBuilder(10, 20, 30)
 			.placeEntity(0, 0, 0, 0, entity)			
 			.build();
 
 		cache = HashBiMap.create();
-		cache.put(entity, new Vec4(0.0, 0.0, 0.0, 0.0));
+		cache.put(entity, new Vec4i(0, 0, 0, 0));
 		context = new Context(worldMap, cache);
 	}
 
 	@Test
 	public void testMoveEntityReturnsValidContext() {
-		Action a = new MoveEntityAction(entity, entity, new Vec4(1.0, 0.0, 0.0, 0.0));
+		Action a = new MoveEntityAction(entity, entity, new Vec4i(1, 0, 0, 0));
 
 		if (a.isValid(context)) {
 			Context newContext = a.execute(context);
@@ -42,12 +63,12 @@ public class ActionTest {
 	
 	@Test
 	public void testMoveEntityPositionChanged() {
-		Vec4 dst = new Vec4(1.0, 0.0, 0.0, 0.0);
+		Vec4i dst = new Vec4i(1, 0, 0, 0);
 		Action a = new MoveEntityAction(entity, entity, dst);
 
 		if (a.isValid(context)) {
 			Context newContext = a.execute(context);
-			assertTrue(newContext.getEntityPositionCache().get(entity).equals(dst));			
+			assertTrue(newContext.getPositionCache().get(entity).equals(dst));			
 		} else {
 			fail();
 		}		

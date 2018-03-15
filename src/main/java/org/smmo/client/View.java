@@ -299,9 +299,9 @@ public class View {
 		view.init();
 		
 		WorldMap wm = new WorldMapBuilder(9, 9, 1)
-			.placeEntity(0, 0, 0, 0, new Entity())
-			.placeEntity(8, 8, 0, 0, new Entity())
-			.placeEntity(4, 4, 0, 0, new Entity())
+			.placeEntity(0, 0, 0, 0, new Entity() {})
+			.placeEntity(8, 8, 0, 0, new Entity() {})
+			.placeEntity(4, 4, 0, 0, new Entity() {})
 			.build();
 		
 		view.setWorldMap(wm);

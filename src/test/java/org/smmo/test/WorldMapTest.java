@@ -12,7 +12,7 @@ import java.io.ObjectInputStream;
 
 public class WorldMapTest {
 	
-	public static class TestEntity extends Entity implements Serializable {
+	public static class TestEntity implements Entity {
 		private final String text;
 
 		public TestEntity(String text) {
@@ -215,34 +215,6 @@ public class WorldMapTest {
 		} catch (Exception e) {
 			fail();
 		}
-	}
-
-	@Test
-	public void testSerializeEntity() {
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ObjectOutputStream out = new ObjectOutputStream(baos);
-			out.writeObject(new TestEntity("hej"));
-		} catch (Exception e) {
-			fail();
-		}		
-	}
-	
-	@Test
-	public void testDeserializeEntity() {
-		try {
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ObjectOutputStream out = new ObjectOutputStream(baos);
-			out.writeObject(new TestEntity("hej"));
-
-			byte [] bytes = baos.toByteArray();
-			ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-			ObjectInputStream in = new ObjectInputStream(bais);
-			TestEntity entity = (TestEntity) in.readObject();
-			assertTrue(entity.toString().equals("hej"));			
-		} catch (Exception e) {
-			fail();
-		}		
 	}
 
 	@Test

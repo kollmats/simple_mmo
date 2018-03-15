@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.smmo.test.ConnectionManagerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2018-03-11T21:59:47" hostname="Detox.local" time="0.011">
+<testsuite name="org.smmo.test.ConnectionManagerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2018-03-15T18:45:19" hostname="Detox.local" time="0.007">
   <properties/>
-  <testcase name="testBufferCopied" classname="org.smmo.test.ConnectionManagerTest" time="0.004"/>
-  <testcase name="testProcessBuffers" classname="org.smmo.test.ConnectionManagerTest" time="0.002"/>
-  <testcase name="testBufferReadOnly" classname="org.smmo.test.ConnectionManagerTest" time="0.001"/>
+  <testcase name="testBufferCopied" classname="org.smmo.test.ConnectionManagerTest" time="0.003"/>
+  <testcase name="testProcessBuffers" classname="org.smmo.test.ConnectionManagerTest" time="0.0"/>
+  <testcase name="testBufferReadOnly" classname="org.smmo.test.ConnectionManagerTest" time="0.0"/>
   <testcase name="testTrackConnection" classname="org.smmo.test.ConnectionManagerTest" time="0.0"/>
-  <testcase name="testUntrackConnection" classname="org.smmo.test.ConnectionManagerTest" time="0.001"/>
+  <testcase name="testUntrackConnection" classname="org.smmo.test.ConnectionManagerTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

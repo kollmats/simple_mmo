@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.smmo.test.WorldMapTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2018-03-11T21:59:47" hostname="Detox.local" time="0.092">
+<testsuite name="org.smmo.test.WorldMapTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2018-03-15T18:45:19" hostname="Detox.local" time="0.06">
   <properties/>
-  <testcase name="testAppendRow" classname="org.smmo.test.WorldMapTest" time="0.001"/>
-  <testcase name="testShiftLeftUp" classname="org.smmo.test.WorldMapTest" time="0.001"/>
-  <testcase name="testClone" classname="org.smmo.test.WorldMapTest" time="0.001"/>
-  <testcase name="testPlaceEntity" classname="org.smmo.test.WorldMapTest" time="0.001"/>
-  <testcase name="testDimensions" classname="org.smmo.test.WorldMapTest" time="0.003"/>
+  <testcase name="testAppendRow" classname="org.smmo.test.WorldMapTest" time="0.012"/>
+  <testcase name="testShiftLeftUp" classname="org.smmo.test.WorldMapTest" time="0.0"/>
+  <testcase name="testClone" classname="org.smmo.test.WorldMapTest" time="0.0"/>
+  <testcase name="testPlaceEntity" classname="org.smmo.test.WorldMapTest" time="0.0"/>
+  <testcase name="testDimensions" classname="org.smmo.test.WorldMapTest" time="0.005"/>
   <testcase name="testRemoveEntity" classname="org.smmo.test.WorldMapTest" time="0.001"/>
-  <testcase name="testSerializeEntity" classname="org.smmo.test.WorldMapTest" time="0.004"/>
-  <testcase name="testDeserializeEntity" classname="org.smmo.test.WorldMapTest" time="0.001"/>
-  <testcase name="testSerializeWorldMap" classname="org.smmo.test.WorldMapTest" time="0.029"/>
-  <testcase name="testGetSubmapBottomRow" classname="org.smmo.test.WorldMapTest" time="0.001"/>
-  <testcase name="testDeserializeWorldMap" classname="org.smmo.test.WorldMapTest" time="0.032"/>
+  <testcase name="testSerializeWorldMap" classname="org.smmo.test.WorldMapTest" time="0.02"/>
+  <testcase name="testGetSubmapBottomRow" classname="org.smmo.test.WorldMapTest" time="0.0"/>
+  <testcase name="testDeserializeWorldMap" classname="org.smmo.test.WorldMapTest" time="0.016"/>
   <testcase name="testGetSubmapEntityOrder" classname="org.smmo.test.WorldMapTest" time="0.0"/>
-  <testcase name="testShiftLeft" classname="org.smmo.test.WorldMapTest" time="0.001"/>
+  <testcase name="testShiftLeft" classname="org.smmo.test.WorldMapTest" time="0.0"/>
   <testcase name="testMoveEntity" classname="org.smmo.test.WorldMapTest" time="0.001"/>
   <testcase name="testAppendLayer" classname="org.smmo.test.WorldMapTest" time="0.0"/>
-  <testcase name="testAppendColumn" classname="org.smmo.test.WorldMapTest" time="0.0"/>
+  <testcase name="testAppendColumn" classname="org.smmo.test.WorldMapTest" time="0.001"/>
   <system-out><![CDATA[success
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

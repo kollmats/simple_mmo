@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ActionTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2018-03-15T18:45:20" hostname="Detox.local" time="0.012">
+  <properties/>
+  <testcase name="testMoveEntityReturnsValidContext" classname="ActionTest" time="0.008"/>
+  <testcase name="testMoveEntityPositionChanged" classname="ActionTest" time="0.004"/>
+  <system-out><![CDATA[success
+success
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

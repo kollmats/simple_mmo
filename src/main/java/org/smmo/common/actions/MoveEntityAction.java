@@ -1,33 +1,29 @@
 package org.smmo.common.actions;
 
+import org.smmo.common.*;
+import org.smmo.common.util.*;
 import com.google.common.collect.BiMap;
-import org.smmo.common.Entity;
-import org.smmo.common.Context;
-import org.smmo.common.Vec4;
-import org.smmo.common.WorldMap;
-import org.smmo.common.WorldMapBuilder;
 
-public class MoveEntityAction implements Action {
+public class MoveEntityAction extends Action {
 
-	private final Entity subject;
-	private final Entity object;
-	private final Vec4 dst;
+	public final UniqueEntity subject;
+	public final UniqueEntity object;
+	public final Vec4i dst;
 	
-	public MoveEntityAction(Entity subject, Entity object, Vec4 dst) {
+	public MoveEntityAction(UniqueEntity subject, UniqueEntity object, Vec4i dst) {
 		this.subject = subject;
 		this.object = object;
 		this.dst = dst;
 	}
 	
 	public boolean isValid(Context c) {
-		final BiMap<Entity, Vec4> cache = c.getEntityPositionCache();
-		final Vec4 sPos = cache.get(subject);
-		final Vec4 oPos = cache.get(object);
+		final Vec4i sPos = c.getEntityPosition(subject);
+		final Vec4i oPos = c.getEntityPosition(object);
 		
 		if ((sPos == null) || (oPos == null))
 			return false;
 
-		double d = Vec4.norm(Vec4.subtract(sPos, oPos));
+		double d = Vec.norm(Vec.subtract(sPos, oPos));
 
 		if (d > 1.4)
 			return false;
@@ -36,15 +32,19 @@ public class MoveEntityAction implements Action {
 	}
 	
 	public Context execute(Context c) {
-		final BiMap<Entity, Vec4> cache = c.getEntityPositionCache();
-		final Vec4 src = cache.get(object);
+		final Vec4i src = c.getEntityPosition(object);
 		
 		WorldMap wm = new WorldMapBuilder(c.getWorldMap())
-			.moveEntity((int) src.x, (int) src.y, (int) src.z, (int) src.w,
-						(int) dst.x, (int) dst.y, (int) dst.z, (int) dst.w)
+			.moveEntity(src.getX(),  src.getY(),  src.getZ(),  src.getW(),
+						dst.getX(),  dst.getY(),  dst.getZ(),  dst.getW())
 			.build();
 
+		BiMap<UniqueEntity, Vec4i> cache = c.getPositionCache();
 		cache.forcePut(object, dst);
 		return new Context(wm, cache);
+	}
+
+	public Action switchContext(Context src, Context dst) {
+		throw new NotImplementedException();
 	}
 }
