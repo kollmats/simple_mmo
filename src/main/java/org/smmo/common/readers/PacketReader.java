@@ -5,6 +5,12 @@ import java.io.InputStream;
 import java.lang.ClassNotFoundException;
 import java.io.IOException;
 
-public interface PacketReader {
-	public Object readFrom(InputStream inputStream) throws IOException, ClassNotFoundException;
+import org.smmo.common.actions.Action;
+
+public abstract class PacketReader {
+	public abstract Action readFrom(InputStream inputStream) throws IOException, ClassNotFoundException;
+
+	public PacketReader(long actorId) {
+		//
+	}
 }

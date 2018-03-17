@@ -38,7 +38,7 @@ public class WriterTest {
 	
 	@Test
 	public void testWrite() {
-		MoveEntityWriter mew = new MoveEntityWriter(action, context);
+		MoveEntityWriter mew = new MoveEntityWriter(action);
 		try {		
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			mew.writeTo(baos);
@@ -58,7 +58,7 @@ public class WriterTest {
 		
 		Context subContext = context.getPerspective(entity);
 
-		MoveEntityWriter mew = new MoveEntityWriter(action, context, subContext);		
+		//MoveEntityWriter mew = new MoveEntityWriter(action, context, subContext);		
 		
 
 		

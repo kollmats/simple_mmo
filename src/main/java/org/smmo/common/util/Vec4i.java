@@ -28,6 +28,10 @@ public class Vec4i {
 		return (int) vec4d.getW();
 	}
 
+	public Vec3i getXYZ() {
+		return new Vec3i(getX(), getY(), getZ());
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null)

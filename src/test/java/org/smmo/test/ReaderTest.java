@@ -42,17 +42,17 @@ public class ReaderTest {
 
 	@Test
 	public void testRead() {
-		MoveEntityWriter mew = new MoveEntityWriter(action, context);
+		MoveEntityWriter mew = new MoveEntityWriter(action);
 		try {		
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			mew.writeTo(baos);
 
 			ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
 			
-			MoveEntityReader mer = new MoveEntityReader(0, context);
+			MoveEntityReader mer = new MoveEntityReader(0);
 			MoveEntityAction mea = (MoveEntityAction) mer.readFrom(bais);
 
-			assertEquals(mea.subjectId, action.subjectId);
+			assertEquals(mea.actorId, action.actorId);
 			assertEquals(mea.objectPos, action.objectPos);
 			assertEquals(mea.targetPos, action.targetPos);
 			

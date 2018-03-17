@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.smmo.test.ContextValidatorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2018-03-17T14:44:48" hostname="Detox.local" time="0.005">
+<testsuite name="org.smmo.test.ContextValidatorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2018-03-17T19:09:03" hostname="Detox.local" time="0.006">
   <properties/>
   <testcase name="testCacheValidWithEntity" classname="org.smmo.test.ContextValidatorTest" time="0.0"/>
-  <testcase name="testCacheValidWithoutEntity" classname="org.smmo.test.ContextValidatorTest" time="0.0"/>
+  <testcase name="testCacheValidWithoutEntity" classname="org.smmo.test.ContextValidatorTest" time="0.001"/>
   <testcase name="testCacheValidWithEntityInWrongPosition" classname="org.smmo.test.ContextValidatorTest" time="0.001"/>
-  <testcase name="testCacheValidWithWrongEntity" classname="org.smmo.test.ContextValidatorTest" time="0.002"/>
+  <testcase name="testCacheValidWithWrongEntity" classname="org.smmo.test.ContextValidatorTest" time="0.001"/>
   <testcase name="testCacheValidWithEntityOnWrongSpot" classname="org.smmo.test.ContextValidatorTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.smmo.test.ContextReducerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2018-03-17T14:44:48" hostname="Detox.local" time="0.05">
+<testsuite name="org.smmo.test.ContextReducerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2018-03-17T19:09:03" hostname="Detox.local" time="0.06">
   <properties/>
-  <testcase name="testOutsideLow" classname="org.smmo.test.ContextReducerTest" time="0.015"/>
-  <testcase name="intervalLowCorner" classname="org.smmo.test.ContextReducerTest" time="0.017"/>
-  <testcase name="testOutsideHigh" classname="org.smmo.test.ContextReducerTest" time="0.007"/>
-  <testcase name="intervalContained" classname="org.smmo.test.ContextReducerTest" time="0.005"/>
-  <testcase name="intervalHighCorner" classname="org.smmo.test.ContextReducerTest" time="0.004"/>
+  <testcase name="testOutsideLow" classname="org.smmo.test.ContextReducerTest" time="0.014"/>
+  <testcase name="intervalLowCorner" classname="org.smmo.test.ContextReducerTest" time="0.024"/>
+  <testcase name="testOutsideHigh" classname="org.smmo.test.ContextReducerTest" time="0.006"/>
+  <testcase name="intervalContained" classname="org.smmo.test.ContextReducerTest" time="0.009"/>
+  <testcase name="intervalHighCorner" classname="org.smmo.test.ContextReducerTest" time="0.005"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

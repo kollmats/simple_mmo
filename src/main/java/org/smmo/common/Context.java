@@ -1,12 +1,15 @@
 package org.smmo.common;
 
+
 import java.util.Map;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.HashBiMap;
 import java.util.Optional;
+import java.util.List;
 import java.lang.Math;
 
+import org.smmo.common.actions.Action;
 import org.smmo.common.util.*;
 
 public class Context {
@@ -75,11 +78,25 @@ public class Context {
 		return null;
 	}
 	
+	public UniqueEntity getEntity(long entityId) {
+		for (UniqueEntity e : positionCache.keySet()) {
+
+			if (e.getId() == entityId) {
+				return e;
+			}
+		}
+		return null;
+	}
+	
 	public boolean isValid() {
 		return ContextValidator.isContextValid(this);
 	}
 
 	public Context getPerspective(UniqueEntity observer) {
 		return ContextReducer.reduceToPerspectiveOf(observer, this);
+	}
+
+	public List<UniqueEntity> getSpectators(Action action) {
+		throw new NotImplementedException();
 	}	
 }
