@@ -1,4 +1,4 @@
-package org.smmo.common;
+package org.smmo.common.util;
 
 public class Interval3i {
 	public final int xMin;

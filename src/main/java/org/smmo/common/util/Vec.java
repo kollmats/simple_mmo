@@ -27,6 +27,26 @@ public class Vec {
 	public static double dot(Vec4d a, Vec4d b) {
 		return a.getX() * b.getX() + a.getY() * b.getY() + a.getZ() * b.getZ() + a.getW() * b.getW();
 	}
+
+	public static Vec3i multiply(Vec3i a, int b) {
+		return multiply(a, new Vec3i(b, b, b));
+	}
+
+	public static Vec3i multiply(Vec3i a, Vec3i b) {
+		return new Vec3i(a.getX() * b.getX(),
+						 a.getY() * b.getY(),
+						 a.getZ() * b.getZ());
+	}
+	
+	public static Vec3i divide(Vec3i a, int b) {
+		return divide(a, new Vec3i(b, b, b));
+	}
+	
+	public static Vec3i divide(Vec3i a, Vec3i b) {
+		return new Vec3i(a.getX() / b.getX(),
+						 a.getY() / b.getY(),
+						 a.getZ() / b.getZ());
+	}
 	
 	public static Vec3i add(Vec3i a, Vec3i b) {
 		return new Vec3i(a.getX() + b.getX(),
@@ -40,7 +60,11 @@ public class Vec {
 						 a.getZ() + b.getZ(),						 
 						 a.getW() + b.getW());
 	}
-	
+
+	public static Vec3i subtract(Vec3i a, int b) {
+		return subtract(a, new Vec3i(b, b, b));
+	}
+
 	public static Vec3i subtract(Vec3i a, Vec3i b) {
 		return new Vec3i(a.getX() - b.getX(),
 						 a.getY() - b.getY(),

@@ -92,10 +92,14 @@ public class WorldMapBuilder {
 		return builder;
 	}
 
+	public WorldMapBuilder prepend(WorldMap other, int axis) {
+		return new WorldMapBuilder(other).append(this.build(), axis);
+	}
+
 	public WorldMapBuilder append(WorldMap other, int axis) {
-		int newRows = rows + (axis == 0 ? 1 : 0);
-		int newColumns = columns + (axis == 1 ? 1 : 0);
-		int newLayers = layers + (axis == 2 ? 1 : 0);
+		int newRows = rows + (axis == 0 ? other.getRows() : 0);
+		int newColumns = columns + (axis == 1 ? other.getColumns() : 0);
+		int newLayers = layers + (axis == 2 ? other.getLayers() : 0);
 		
 		if ((axis < 0) || (axis > 2)) {
 			throw new IllegalArgumentException("Axis must be 0, 1 or 2!");				

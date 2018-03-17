@@ -166,6 +166,63 @@ public class WorldMapTest {
 			fail();
 		}
 	}
+
+
+	@Test
+	public void testAppendRows() {
+		WorldMap wm1 = new WorldMapBuilder(2, 2, 1)
+			.placeEntity(1, 1, 0, 0, new TestEntity("hej"))
+			.build();
+		
+		WorldMap wm2 = new WorldMapBuilder(2, 2, 1)
+			.placeEntity(0, 1, 0, 0, new TestEntity("hejdå"))
+			.build();
+
+		try {
+			WorldMap wm3 = new WorldMapBuilder(wm1)
+				.append(wm2, 0)
+				.build();
+
+			assertEquals(wm3.getRows(), 4);
+			assertEquals(wm3.getColumns(), 2);
+			assertEquals(wm3.getLayers(), 1);
+		
+			assertEquals(wm3.getEntities(1, 1, 0).size(), 1);
+			assertEquals(wm3.getEntities(2, 0, 0).size(), 0);								
+			assertEquals(wm3.getEntities(2, 1, 0).size(), 1);
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+	@Test
+	public void testPrependRows() {
+		WorldMap wm1 = new WorldMapBuilder(2, 2, 1)
+			.placeEntity(1, 1, 0, 0, new TestEntity("hej"))
+			.build();
+		
+		WorldMap wm2 = new WorldMapBuilder(2, 2, 1)
+			.placeEntity(0, 1, 0, 0, new TestEntity("hejdå"))
+			.build();
+
+		try {
+			WorldMap wm3 = new WorldMapBuilder(wm2)
+				.prepend(wm1, 0)
+				.build();
+
+			assertEquals(wm3.getRows(), 4);
+			assertEquals(wm3.getColumns(), 2);
+			assertEquals(wm3.getLayers(), 1);
+		
+			assertEquals(wm3.getEntities(1, 1, 0).size(), 1);
+			assertEquals(wm3.getEntities(2, 0, 0).size(), 0);								
+			assertEquals(wm3.getEntities(2, 1, 0).size(), 1);
+		} catch (Exception e) {
+			fail();
+		}
+	}
+	
+
 	
 	@Test
 	public void testAppendColumn() {

@@ -34,7 +34,7 @@ public class ReaderTest {
 			.build();
 
 		cache = HashBiMap.create();
-		cache.put(entity, new Vec4i(2, 3, 4, 5));
+		cache.put(entity, new Vec4i(2, 3, 4, 0));
 		context = new Context(worldMap, cache);
 		action = new MoveEntityAction(0, new Vec4i(2, 3, 4, 5), new Vec4i(1, 3, 4, 0));
 	}

@@ -11,7 +11,7 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServerTest {
-
+	/*
 	public void connectAndSendByte(byte val, String hostname, int port) throws Exception {		
 		InetSocketAddress address = new InetSocketAddress(hostname, port);
 		
@@ -46,5 +46,5 @@ public class ServerTest {
 	}
 
 
-	
+	*/
 }

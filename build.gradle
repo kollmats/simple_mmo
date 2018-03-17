@@ -77,9 +77,11 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
-    
+
     // Use JUnit test framework
     testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-core:2.+"     
+
 }
 
 test {

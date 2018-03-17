@@ -1,7 +1,5 @@
 package org.smmo.test;
 
-
-
 import org.smmo.server.*;
 import org.smmo.common.*;
 import org.smmo.common.actions.*;
@@ -27,14 +25,15 @@ public class WriterTest {
 	@Before
 	public void setUp() {
 		entity = new IdEntity(1);	
-		worldMap = new WorldMapBuilder(10, 20, 30)
+		worldMap = new WorldMapBuilder(30, 30, 30)
 			.placeEntity(2, 3, 4, 0, entity)			
 			.build();
 
 		cache = HashBiMap.create();
-		cache.put(entity, new Vec4i(2, 3, 4, 5));
+		cache.put(entity, new Vec4i(2, 3, 4, 0));
+
 		context = new Context(worldMap, cache);
-		action = new MoveEntityAction(0, new Vec4i(2, 3, 4, 5), new Vec4i(1, 3, 4, 0));
+		action = new MoveEntityAction(0, new Vec4i(2, 3, 4, 0), new Vec4i(1, 3, 4, 0));
 	}
 	
 	@Test
@@ -49,5 +48,22 @@ public class WriterTest {
 		} catch (Exception e) {
 			fail();
 		}		
-	}	
+	}
+
+	@Test
+	public void testWriteToSubContext() {
+
+		if (!context.isValid())
+			fail();
+		
+		Context subContext = context.getPerspective(entity);
+
+		MoveEntityWriter mew = new MoveEntityWriter(action, context, subContext);		
+		
+
+		
+
+
+	}
+	
 }

@@ -32,35 +32,43 @@ public class WorldMap implements Serializable {
 		
 		ImmutableList<Entity> entities = getEntities(i, j, k);
 		if (entities.size() > 0) {
-			return Optional.ofNullable(entities.get(0));
+			return Optional.ofNullable(entities.get(idx));
 		} else {
 			return Optional.empty();
 		}
 	}
 
-	public WorldMap getSubmap(int iStart, int jStart, int kStart, int rows, int columns, int layers) {
-		WorldMapBuilder builder = new WorldMapBuilder(rows, columns, layers);
-		
-		for (int i = 0; i < rows; i++) {
+	public WorldMap getSubmap(int iStart, int jStart, int kStart, int nRows, int nCols, int nLays) {
 
-			if (iStart + i >= getRows())
+		final int nRowsThis = getRows();
+		final int nColsThis = getColumns();
+		final int nLaysThis = getLayers();
+		
+		WorldMapBuilder builder = new WorldMapBuilder(nRows, nCols, nLays);
+		
+		for (int iSub = 0; iSub < nRows; iSub++) {
+			int iThis = iStart + iSub;
+
+			if ((iThis < 0) || (iThis > nRowsThis))
 				continue;
 			
-			for (int j = 0; j < columns; j++) {
-				if (jStart + j >= getColumns())
+			for (int jSub = 0; jSub < nCols; jSub++) {
+				int jThis = jStart + jSub;
+				
+				if ((jThis < 0) || (jThis > nColsThis))
 					continue;
 				
-				for (int k = 0; k < layers; k++) {
-					if (kStart + k >= getLayers())
-						continue;
+				for (int kSub = 0; kSub < nLays; kSub++) {
+					int kThis = kStart + kSub;
 					
-					ImmutableList<Entity> entities;
+					if ((kThis < 0) || (kThis > nLaysThis))
+						continue;					
 					
-					entities = this.entities[iStart + i][jStart + j][kStart + k];
+					ImmutableList<Entity> entities = this.entities[iThis][jThis][kThis];
 
 					for (int idx = 0; idx < entities.size(); idx++) {
 						Entity e = entities.get(idx);
-						builder = builder.placeEntity(i, j, k, idx, e);
+						builder = builder.placeEntity(iSub, jSub, kSub, idx, e);
 					}					
 				}
 			}
